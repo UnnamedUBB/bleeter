@@ -1,0 +1,6 @@
+@Bleeter.AccountService_HostAddress = http://localhost:5109
+
+GET {{Bleeter.AccountService_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

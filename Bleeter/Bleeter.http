@@ -1,6 +1,0 @@
-@Bleeter_HostAddress = http://localhost:5117
-
-GET {{Bleeter_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
