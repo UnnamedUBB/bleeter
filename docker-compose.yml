@@ -1,12 +1,4 @@
 services:
-  mariadb:
-    image: mariadb
-    ports:
-      - 3306:3306
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MARIADB_DATABASE: accounts
-
   phpmyadmin:
     image: phpmyadmin
     ports:
@@ -14,3 +6,37 @@ services:
     environment:
       UPLOAD_LIMIT: 2G
       PMA_HOST: mariadb
+      
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    ports:
+      - 5672:5672
+      - 15672:15672
+    volumes:
+      - /var/bleeter/rabbit
+        
+  account-serivce:
+    image: account-service:latest
+    depends_on:
+      account-service-db:
+        condition: service_started
+    ports:
+      - 80:80
+      - 8080:8080
+        
+  account-service-db:
+    image: mariadb
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MARIADB_DATABASE: accounts
+    volumes:
+      - db:/var/bleeter/data/account-service
+  
+volumes:
+  db:
+    name: "bleeter"
+    driver: local
+    
+    

@@ -3,10 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bleeter.Domain", "Bleeter.Domain\Bleeter.Domain.csproj", "{1393B7BE-1719-4F24-9C61-F35127EBE1C6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AccountService", "AccountService", "{5FD032EA-CBBE-4AAF-A08B-08D84C53FDDF}"
+	ProjectSection(SolutionItems) = preProject
+		Dockerfile = Dockerfile
+		.dockerignore = .dockerignore
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bleeter.AccountService", "Bleeter.AccountService\Bleeter.AccountService.csproj", "{15C98D4E-7535-4F67-AA33-AEBD5AA58F2E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bleeter.AccountService.DAL", "Bleeter.AccountService.DAL\Bleeter.AccountService.DAL.csproj", "{B8AC7D4D-A2D7-44B2-88B4-1A7682173801}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{688661F7-BF3A-413F-BBCB-65C53662E67A}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.yml = docker-compose.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
