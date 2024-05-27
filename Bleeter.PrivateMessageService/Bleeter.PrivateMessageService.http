@@ -1,0 +1,6 @@
+@Bleeter.PrivateMessageService_HostAddress = http://localhost:5027
+
+GET {{Bleeter.PrivateMessageService_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
