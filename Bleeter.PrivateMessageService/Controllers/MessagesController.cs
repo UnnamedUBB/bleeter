@@ -29,13 +29,7 @@ public class MessagesController : ControllerBase
         return Ok(logs);
     }
 
-    [HttpPost("snd")]
-    public async Task<IActionResult> SendMessageToUser([FromBody] MessageDto message)
-    {
-        await _hubContext.Clients.User(message.ToUser).SendAsync("ReceiveMessage", message.Content);
-        return Ok();
-    }
-    
+   
 }
 
 public class MessageDto
