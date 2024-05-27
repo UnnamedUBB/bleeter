@@ -1,5 +1,4 @@
-﻿using Bleeter.PrivateMessageService.Models;
-using Microsoft.AspNetCore.SignalR;
+﻿using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Collections.Concurrent;
 using System.Threading.Tasks;
@@ -10,7 +9,7 @@ public class ChatHub : Hub
 
     public async Task SendMessageToUser(string user, string message)
     {
-        var fromUser = Context.User.Identity.Name;
+        var fromUser = Context.User?.Identity?.Name ?? "Anonymous";
         var log = new MessageLog
         {
             ToUser = user,
@@ -19,24 +18,20 @@ public class ChatHub : Hub
             Timestamp = DateTime.UtcNow
         };
         _messageLogs.Add(log);
-        Console.WriteLine($"Message from {fromUser} to {user}: {message} : {log}");
+
+        // Wypisywanie wiadomości na konsolę
+        Console.WriteLine($"Message from {fromUser} to {user}: {message}");
 
         await Clients.User(user).SendAsync("ReceiveMessage", message);
     }
 
-    public override async Task OnConnectedAsync()
-    {
-        var userName = Context.User.Identity.Name;
-        await Groups.AddToGroupAsync(Context.ConnectionId, userName);
-        await base.OnConnectedAsync();
-    }
-
-    public override async Task OnDisconnectedAsync(Exception exception)
-    {
-        var userName = Context.User.Identity.Name;
-        await Groups.RemoveFromGroupAsync(Context.ConnectionId, userName);
-        await base.OnDisconnectedAsync(exception);
-    }
-
     public static ConcurrentBag<MessageLog> GetMessageLogs() => _messageLogs;
+}
+
+public class MessageLog
+{
+    public string ToUser { get; set; }
+    public string FromUser { get; set; }
+    public string Content { get; set; }
+    public DateTime Timestamp { get; set; }
 }

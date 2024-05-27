@@ -29,7 +29,13 @@ public class MessagesController : ControllerBase
         return Ok(logs);
     }
 
-   
+    [HttpGet("allLogs")]
+    public ActionResult<IEnumerable<MessageLog>> GetAllMessages()
+    {
+        var logs = ChatHub.GetMessageLogs();
+        return Ok(logs);
+    }
+
 }
 
 public class MessageDto
