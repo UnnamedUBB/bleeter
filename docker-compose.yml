@@ -34,6 +34,25 @@ services:
     volumes:
       - db:/var/bleeter/data/account-service
   
+  bleet-serivce:
+    image: bleet-service:latest
+    depends_on:
+      bleet-service-db:
+        condition: service_started
+    ports:
+      - 80:80
+      - 8080:8080
+      
+  bleet-service-db:
+    image: mariadb
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MARIADB_DATABASE: bleets
+    volumes:
+      - db:/var/bleeter/data/bleet-service
+  
 volumes:
   db:
     name: "bleeter"
