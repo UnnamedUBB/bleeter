@@ -28,6 +28,7 @@ public class MessagesController : ControllerBase
         var logs = ChatHub.GetMessageLogs().Where(log => log.TargetId == user);
         return Ok(logs);
     }
+    //tego nizej tu nie powinno być  - to jest testowe i nie ma sensu tego zostawiać w kodzie produkcyjnym  
     [HttpGet("logsS/{user}")]
     public ActionResult<IEnumerable<MessageLog>> GetUserMessagesS(Guid user)
     {
