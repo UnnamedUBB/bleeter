@@ -23,9 +23,16 @@ public class MessagesController : ControllerBase
     }
 
     [HttpGet("logs/{user}")]
-    public ActionResult<IEnumerable<MessageLog>> GetUserMessages(string user)
+    public ActionResult<IEnumerable<MessageLog>> GetUserMessages(Guid user)
     {
-        var logs = ChatHub.GetMessageLogs().Where(log => log.ToUser == user);
+        var logs = ChatHub.GetMessageLogs().Where(log => log.TargetId == user);
+        return Ok(logs);
+    }
+    [HttpGet("logsS/{user}")]
+    public ActionResult<IEnumerable<MessageLog>> GetUserMessagesS(Guid user)
+    {
+        ChatHub chatHub = new ChatHub();
+        var logs = chatHub.SendMessageToUser(user, "test");
         return Ok(logs);
     }
 

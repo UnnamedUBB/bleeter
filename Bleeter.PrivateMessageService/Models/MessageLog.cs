@@ -2,8 +2,9 @@
 
 public class MessageLog
 {
-    public string ToUser { get; set; }
-    public string FromUser { get; set; }
+    public Guid Id { get; set; }
+    public Guid TargetId { get; set; }
+    public Guid AuthorId { get; set; }
     public string Content { get; set; }
     public DateTime Timestamp { get; set; }
 }
