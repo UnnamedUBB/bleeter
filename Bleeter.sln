@@ -1,29 +1,20 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Bleeter.AccountService", "Bleeter.AccountService", "{5FD032EA-CBBE-4AAF-A08B-08D84C53FDDF}"
-	ProjectSection(SolutionItems) = preProject
-		Dockerfile = Dockerfile
-		.dockerignore = .dockerignore
-	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bleeter.AccountService", "Bleeter.AccountService\Bleeter.AccountService.csproj", "{15C98D4E-7535-4F67-AA33-AEBD5AA58F2E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bleeter.AccountService.DAL", "Bleeter.AccountService.DAL\Bleeter.AccountService.DAL.csproj", "{B8AC7D4D-A2D7-44B2-88B4-1A7682173801}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bleeter.AccountsService", "Bleeter.AccountsService\Bleeter.AccountsService.csproj", "{15C98D4E-7535-4F67-AA33-AEBD5AA58F2E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{688661F7-BF3A-413F-BBCB-65C53662E67A}"
 	ProjectSection(SolutionItems) = preProject
 		docker-compose.yml = docker-compose.yml
+		build-images.bat = build-images.bat
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Bleeter.BleetService", "Bleeter.BleetService", "{E86E9541-83A5-40F6-8DBA-4FAE2CF4FC89}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bleeter.BleetsService", "Bleeter.BleetsService\Bleeter.BleetsService.csproj", "{4C7EE956-5D3A-499E-8CF7-E711E77EB7DC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bleeter.BleetService", "Bleeter.BleetService\Bleeter.BleetService.csproj", "{4C7EE956-5D3A-499E-8CF7-E711E77EB7DC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bleeter.Shared", "Bleeter.Shared\Bleeter.Shared.csproj", "{9B40F9A3-3571-4607-BC31-533C497A2C8A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bleeter.BleetService.DAL", "Bleeter.BleetService.DAL\Bleeter.BleetService.DAL.csproj", "{96B9978C-662C-45EC-9E39-C1DD6284DAC1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bleeter.PrivateMessagesService", "Bleeter.PrivateMessagesService\Bleeter.PrivateMessagesService.csproj", "{DC1F24AA-621B-4BEA-82E6-33515FB03DA9}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Bleeter.Shared", "Bleeter.Shared", "{C889007D-3C07-43AC-9B0E-FFDC0A2D0844}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bleeter.Shared.DAL", "Bleeter.Shared.DAL\Bleeter.Shared.DAL.csproj", "{9B40F9A3-3571-4607-BC31-533C497A2C8A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bleeter.NotificationsService", "Bleeter.NotificationsService\Bleeter.NotificationsService.csproj", "{D4134C43-1511-4D9A-B308-0831E075B84A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,28 +26,23 @@ Global
 		{15C98D4E-7535-4F67-AA33-AEBD5AA58F2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{15C98D4E-7535-4F67-AA33-AEBD5AA58F2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{15C98D4E-7535-4F67-AA33-AEBD5AA58F2E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B8AC7D4D-A2D7-44B2-88B4-1A7682173801}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B8AC7D4D-A2D7-44B2-88B4-1A7682173801}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B8AC7D4D-A2D7-44B2-88B4-1A7682173801}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B8AC7D4D-A2D7-44B2-88B4-1A7682173801}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4C7EE956-5D3A-499E-8CF7-E711E77EB7DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4C7EE956-5D3A-499E-8CF7-E711E77EB7DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4C7EE956-5D3A-499E-8CF7-E711E77EB7DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4C7EE956-5D3A-499E-8CF7-E711E77EB7DC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{96B9978C-662C-45EC-9E39-C1DD6284DAC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{96B9978C-662C-45EC-9E39-C1DD6284DAC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{96B9978C-662C-45EC-9E39-C1DD6284DAC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{96B9978C-662C-45EC-9E39-C1DD6284DAC1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9B40F9A3-3571-4607-BC31-533C497A2C8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9B40F9A3-3571-4607-BC31-533C497A2C8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9B40F9A3-3571-4607-BC31-533C497A2C8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9B40F9A3-3571-4607-BC31-533C497A2C8A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC1F24AA-621B-4BEA-82E6-33515FB03DA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC1F24AA-621B-4BEA-82E6-33515FB03DA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC1F24AA-621B-4BEA-82E6-33515FB03DA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC1F24AA-621B-4BEA-82E6-33515FB03DA9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4134C43-1511-4D9A-B308-0831E075B84A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4134C43-1511-4D9A-B308-0831E075B84A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4134C43-1511-4D9A-B308-0831E075B84A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4134C43-1511-4D9A-B308-0831E075B84A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{15C98D4E-7535-4F67-AA33-AEBD5AA58F2E} = {5FD032EA-CBBE-4AAF-A08B-08D84C53FDDF}
-		{B8AC7D4D-A2D7-44B2-88B4-1A7682173801} = {5FD032EA-CBBE-4AAF-A08B-08D84C53FDDF}
-		{4C7EE956-5D3A-499E-8CF7-E711E77EB7DC} = {E86E9541-83A5-40F6-8DBA-4FAE2CF4FC89}
-		{96B9978C-662C-45EC-9E39-C1DD6284DAC1} = {E86E9541-83A5-40F6-8DBA-4FAE2CF4FC89}
-		{9B40F9A3-3571-4607-BC31-533C497A2C8A} = {C889007D-3C07-43AC-9B0E-FFDC0A2D0844}
 	EndGlobalSection
 EndGlobal

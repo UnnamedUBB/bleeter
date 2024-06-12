@@ -1,57 +1,101 @@
 services:
   phpmyadmin:
     image: phpmyadmin
+    container_name: phpmyadmin
     ports:
-      - 9000:80
+      - 9000:9000
     environment:
       UPLOAD_LIMIT: 2G
       PMA_HOST: mariadb
       
   rabbitmq:
     image: rabbitmq:3-management-alpine
+    container_name: rabbitmq
     ports:
       - 5672:5672
       - 15672:15672
     volumes:
       - /var/bleeter/rabbit
         
-  account-serivce:
-    image: account-service:latest
+  account-service:
+    image: accounts-service:latest
+    container_name: accounts-service
     depends_on:
       account-service-db:
         condition: service_started
     ports:
       - 80:80
-      - 8080:8080
         
   account-service-db:
     image: mariadb
+    container_name: accounts-service-db
     ports:
       - 3306:3306
     environment:
       MYSQL_ROOT_PASSWORD: root
       MARIADB_DATABASE: accounts
     volumes:
-      - db:/var/bleeter/data/account-service
+      - db:/var/bleeter/data/accounts
   
-  bleet-serivce:
-    image: bleet-service:latest
+  bleet-service:
+    image: bleets-service:latest
+    container_name: bleets-service
     depends_on:
-      bleet-service-db:
+      bleets-service-db:
         condition: service_started
     ports:
-      - 80:80
-      - 8080:8080
+      - 81:81
       
-  bleet-service-db:
+  bleets-service-db:
     image: mariadb
+    container_name: bleets-service-db
     ports:
-      - 3306:3306
+      - 3307:3307
     environment:
       MYSQL_ROOT_PASSWORD: root
       MARIADB_DATABASE: bleets
     volumes:
-      - db:/var/bleeter/data/bleet-service
+      - db:/var/bleeter/data/bleets
+
+  private-messages-service:
+    image: private-messages-service:latest
+    container_name: private-messages
+    depends_on:
+      private-messages-service-db:
+        condition: service_started
+    ports:
+      - 82:82
+  
+  private-messages-service-db:
+    image: mariadb
+    container_name: private-messages-db
+    ports:
+      - 3308:3308
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MARIADB_DATABASE: pms
+    volumes:
+      - db:/var/bleeter/data/pms
+        
+  notifications-service:
+    image: notifications-service:latest
+    container_name: notifications-service
+    depends_on:
+      notifications-service-db:
+        condition: service_started
+    ports:
+      - 83:83
+  
+  notifications-service-db:
+    image: mariadb
+    container_name: notifications-service-db
+    ports:
+      - 3309:3309
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MARIADB_DATABASE: notifications
+    volumes:
+      - db:/var/bleeter/data/notifications-service
   
 volumes:
   db:

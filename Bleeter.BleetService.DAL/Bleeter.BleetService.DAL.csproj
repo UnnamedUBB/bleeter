@@ -10,8 +10,4 @@
       <ProjectReference Include="..\Bleeter.Shared.DAL\Bleeter.Shared.DAL.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Models\" />
-    </ItemGroup>
-
 </Project>

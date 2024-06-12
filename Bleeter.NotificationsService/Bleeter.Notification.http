@@ -1,0 +1,6 @@
+@Bleeter.Notification_HostAddress = http://localhost:5286
+
+GET {{Bleeter.Notification_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
