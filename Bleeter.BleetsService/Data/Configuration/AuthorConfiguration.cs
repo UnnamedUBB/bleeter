@@ -12,15 +12,17 @@ public class AuthorConfiguration : IEntityTypeConfiguration<AuthorModel>
             .HasMany(x => x.Bleets)
             .WithOne(x => x.Author)
             .HasForeignKey(x => x.AuthorId);
-        
+
         builder
             .HasMany(x => x.Comments)
             .WithOne(x => x.Author)
             .HasForeignKey(x => x.AuthorId);
-        
+
         builder
             .HasMany(x => x.Likes)
             .WithOne(x => x.Account)
             .HasForeignKey(x => x.AccountId);
+
+        builder.HasQueryFilter(x => x.DataDeletedUtc == null);
     }
 }

@@ -54,6 +54,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root
       MARIADB_DATABASE: bleets
+      MYSQL_TCP_PORT: 3307
+      MYSQL_UNIX_PORT: 3307
     volumes:
       - db:/var/bleeter/data/bleets
 

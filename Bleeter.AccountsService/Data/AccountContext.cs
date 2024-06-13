@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Bleeter.AccountService.Data;
 
-public class AccountContext : IdentityDbContext<AccountModel, IdentityRole<Guid>, Guid>
+public class AccountContext : IdentityDbContext<IdentityUser<Guid>, IdentityRole<Guid>, Guid>
 {
     public AccountContext(DbContextOptions<AccountContext> options) : base(options)
     {

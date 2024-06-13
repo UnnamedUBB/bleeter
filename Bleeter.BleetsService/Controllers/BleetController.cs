@@ -1,3 +1,7 @@
+using Bleeter.BleetsService.Mediator.Commands;
+using Bleeter.BleetsService.Mediator.Queries;
+using Bleeter.Shared.Utils;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -5,23 +9,29 @@ namespace Bleeter.BleetsService.Controllers;
 
 [Authorize]
 [Route("[controller]")]
-public class BleetController : ControllerBase
+public class BleetController : BaseController
 {
-    [HttpPost]
-    public IActionResult AddBleet()
+    [HttpGet]
+    public async Task<IActionResult> GetBleets([FromQuery] GetBleetsQuery query)
     {
-        return Ok();
+        return Ok(await Mediator.Send(query));
     }
-
-    [HttpPatch]
-    public IActionResult EditBleet()
+    
+    [HttpPost]
+    public async Task<IActionResult> AddBleet([FromBody] AddBleetCommand command)
     {
+        await Mediator.Send(command);
         return Ok();
     }
 
     [HttpDelete]
-    public IActionResult DeleteBleet()
+    public async Task<IActionResult> DeleteBleet([FromQuery] DeleteBleetCommand command)
     {
+        await Mediator.Send(command);
         return Ok();
+    }
+
+    public BleetController(IMediator mediator) : base(mediator)
+    {
     }
 }

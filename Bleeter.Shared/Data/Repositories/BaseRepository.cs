@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Bleeter.Shared.Data.Repositories;
 
 public abstract class BaseRepository<TContext, TModel> : IBaseRepository<TContext, TModel>
-    where TContext : BaseDbContext
+    where TContext : DbContext
     where TModel : class
 {
     private readonly TContext _context;

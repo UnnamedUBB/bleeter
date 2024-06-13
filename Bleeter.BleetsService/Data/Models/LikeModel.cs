@@ -1,8 +1,10 @@
+using System.ComponentModel.DataAnnotations.Schema;
 using Bleeter.Shared.Data;
 using Bleeter.Shared.Data.Interfaces;
 
 namespace Bleeter.BleetsService.Data.Models;
 
+[Table("Likes")]
 public class LikeModel : BaseModel, IAuditable
 {
     public Guid AccountId { get; set; }
@@ -16,5 +18,5 @@ public class LikeModel : BaseModel, IAuditable
     public DateTime? DateModifiedUtc { get; set; }
     public Guid? ModifiedBy { get; set; }
     public DateTime? DataDeletedUtc { get; set; }
-    public Guid? DateDeletedUtc { get; set; }
+    public Guid? DeletedBy { get; set; }
 }

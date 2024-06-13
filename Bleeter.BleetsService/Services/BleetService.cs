@@ -1,35 +1,43 @@
+using System.Net;
 using Bleeter.BleetsService.Data.Models;
 using Bleeter.BleetsService.Data.Repositories.Interfaces;
-using Bleeter.BleetsService.Dtos;
-using Mapster;
+using Bleeter.BleetsService.Services.Interfaces;
+using Bleeter.Shared.Exceptions;
+using Bleeter.Shared.Services.Interfaces;
 
 namespace Bleeter.BleetsService.Services;
 
-public class BleetService
+public class BleetService : IBleetService
 {
     private readonly IBleetRepository _bleetRepository;
-    private readonly IAuthorRepository _authorRepository;
+    private readonly IAuthorService _authorService;
+    private readonly IUserClaimService _userClaimService;
 
-    public BleetService(IBleetRepository bleetRepository, ICommentRepository commentRepository, IAuthorRepository authorRepository)
+    public BleetService(IBleetRepository bleetRepository, IAuthorService authorService, IUserClaimService userClaimService)
     {
         _bleetRepository = bleetRepository;
-        _authorRepository = authorRepository;
+        _authorService = authorService;
+        _userClaimService = userClaimService;
     }
 
-    public async Task AddBleet(AddCommentRequestDto dto)
+    public async Task AddBleet(string content)
     {
-        // var author = await _authorRepository.ExistsAsync(x => x.Id != )
-        var model = dto.Adapt<BleetModel>();
-        _bleetRepository.Add(model);
+        await _authorService.AddIfNotExistsAsync(_userClaimService.GetUserId(), _userClaimService.GetUserName());
+        _bleetRepository.Add(new BleetModel()
+        {
+            AuthorId = _userClaimService.GetUserId(),
+            Content = content
+        });
     }
 
-    public async Task EditBleet()
+    public async Task DeleteBleet(Guid bleetId)
     {
+        var bleet = await _bleetRepository.GetAsync(x => x.Id == bleetId);
+        if (bleet == null)
+        {
+            throw new DomainException(HttpStatusCode.NotFound, "Bleet, który próbujesz usunąć nie istnieje");
+        }
         
-    }
-
-    public async Task DeleteBleet()
-    {
-        
+        _bleetRepository.Delete(bleet);
     }
 }

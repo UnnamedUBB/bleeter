@@ -1,9 +1,11 @@
 using Bleeter.Shared.Data.Interfaces;
 using Bleeter.Shared.Data.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace Bleeter.Shared.Data.Repositories
 {
-    public abstract class BaseAuditableRepository<TContext, TModel> : BaseRepository<TContext, TModel>, IBaseAuditableRepository<TContext, TModel> where TContext : BaseDbContext
+    public abstract class BaseAuditableRepository<TContext, TModel> : BaseRepository<TContext, TModel>, IBaseAuditableRepository<TContext, TModel> 
+        where TContext : DbContext
         where TModel : class, IAuditable
     {
         public BaseAuditableRepository(TContext context) : base(context)

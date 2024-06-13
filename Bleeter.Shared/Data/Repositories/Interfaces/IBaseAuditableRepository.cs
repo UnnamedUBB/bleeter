@@ -1,9 +1,10 @@
 using System.Linq.Expressions;
 using Bleeter.Shared.Data.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace Bleeter.Shared.Data.Repositories.Interfaces;
 
-public interface IBaseAuditableRepository<TContext, TModel> where TContext : BaseDbContext where TModel : class, IAuditable
+public interface IBaseAuditableRepository<TContext, TModel> where TContext : DbContext where TModel : class, IAuditable
 {
     void Add(TModel model);
     void AddRange(IEnumerable<TModel> models);

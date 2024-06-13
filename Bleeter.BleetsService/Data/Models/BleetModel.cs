@@ -1,8 +1,10 @@
+using System.ComponentModel.DataAnnotations.Schema;
 using Bleeter.Shared.Data;
 using Bleeter.Shared.Data.Interfaces;
 
 namespace Bleeter.BleetsService.Data.Models;
 
+[Table("Bleets")]
 public class BleetModel : BaseModel, IAuditable
 {
     public Guid AuthorId { get; set; }
@@ -13,7 +15,7 @@ public class BleetModel : BaseModel, IAuditable
     public DateTime? DateModifiedUtc { get; set; }
     public Guid? ModifiedBy { get; set; }
     public DateTime? DataDeletedUtc { get; set; }
-    public Guid? DateDeletedUtc { get; set; }
+    public Guid? DeletedBy { get; set; }
     
     public AuthorModel Author { get; set; }
     public ICollection<CommentModel> Comments { get; set; }

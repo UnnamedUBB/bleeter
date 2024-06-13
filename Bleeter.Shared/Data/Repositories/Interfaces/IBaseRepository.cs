@@ -1,9 +1,10 @@
 using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
 
 namespace Bleeter.Shared.Data.Repositories.Interfaces;
 
 public interface IBaseRepository<TContext, TModel> 
-    where TContext : BaseDbContext
+    where TContext : DbContext
     where TModel : class
 {
     public Task<TModel?> GetAsync(Expression<Func<TModel, bool>> expression = null,

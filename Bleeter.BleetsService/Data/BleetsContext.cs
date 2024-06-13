@@ -3,7 +3,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Bleeter.BleetsService.Data;
 
-public class BleetsContext : BaseDbContext
+public class BleetsContext : BaseDbContext<BleetsContext>
 {
-    public BleetsContext(DbContextOptions options) : base(options) {}
+    public BleetsContext(DbContextOptions<BleetsContext> options) : base(options)
+    {
+    }
 }
