@@ -16,16 +16,26 @@ public class RegisterCommand : IRequest
 
 public class RegisterCommandValidator : AbstractValidator<RegisterCommand>
 {
-    public RegisterCommandValidator()
+    public RegisterCommandValidator(UserManager<IdentityUser<Guid>> userManager)
     {
         RuleFor(x => x.UserName)
             .NotEmpty().WithMessage("Nazwa użytkwonika jest wymagana")
-            .MinimumLength(3).WithMessage("Nazwa użytkwonika musi zawierać przynamniej 3 znaki");
+            .MinimumLength(3).WithMessage("Nazwa użytkwonika musi zawierać przynamniej 3 znaki")
+            .MustAsync(async (x, _) =>
+            { 
+                var user = await userManager.FindByNameAsync(x);
+                return user == null;
+            }).WithMessage("Użytkwonik o takiej nazwie użytkownika już istnieje"); ;
         
         RuleFor(user => user.Email)
             .NotEmpty().WithMessage("Email jest wymagany.")
-            .EmailAddress().WithMessage("Niepoprawny adres email");
-
+            .EmailAddress().WithMessage("Niepoprawny adres email")
+            .MustAsync(async (x, _) =>
+            { 
+                var user = await userManager.FindByEmailAsync(x);
+                return user == null;
+            }).WithMessage("Użytkwonik o takim adresie email już istnieje");
+        
         RuleFor(user => user.Password)
             .NotEmpty().WithMessage("Hasło jest wymagane.")
             .MinimumLength(8).WithMessage("Hasło musi składać się z przynajmniej 8 znaków")

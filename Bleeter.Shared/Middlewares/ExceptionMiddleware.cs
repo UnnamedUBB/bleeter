@@ -9,12 +9,13 @@ public sealed class ExceptionMiddleware : IMiddleware
     {
         try
         {
+            Console.WriteLine("work");
             await next(context);
         }
         catch (ValidatorException e)
         {
             context.Response.StatusCode = StatusCodes.Status400BadRequest;
-            // await context.Response.WriteAsJsonAsync(e.Errors);
+            await context.Response.WriteAsJsonAsync(e.Errors);
         }
         catch (DomainException e)
         {

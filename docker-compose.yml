@@ -23,6 +23,7 @@ services:
     depends_on:
       account-service-db:
         condition: service_started
+      
     ports:
       - 5001:5001
         

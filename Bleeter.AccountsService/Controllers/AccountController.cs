@@ -26,6 +26,14 @@ public class AccountController : BaseController
         return Ok();
     }
 
+    [HttpPatch]
+    [Authorize]
+    public async Task<IActionResult> EditAccount([FromBody] EditAccountCommand command)
+    {
+        await Mediator.Send(command);
+        return Ok();
+    }
+
     public AccountController(IMediator mediator) : base(mediator)
     {
     }

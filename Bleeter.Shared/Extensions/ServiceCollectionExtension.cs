@@ -1,8 +1,6 @@
 using System.Text;
 using Bleeter.Shared.Data;
 using Bleeter.Shared.Data.Interfaces;
-using Bleeter.Shared.MessageBroker;
-using Bleeter.Shared.MessageBroker.Interfaces;
 using Bleeter.Shared.Middlewares;
 using Bleeter.Shared.Pipelines;
 using Bleeter.Shared.Services;
@@ -64,14 +62,6 @@ public static class ServiceCollectionExtension
 
         collection.AddScoped<IUnitOfWork, UnitOfWork<TContext>>();
 
-        return collection;
-    }
-    
-    public static IServiceCollection AddMessageBroker(this IServiceCollection collection, IConfiguration configuration)
-    {
-        collection.Configure<RabbitMqOptions>(configuration);
-        collection.AddScoped(typeof(IRabbitMqPublisher<>), typeof(RabbitMqPublisher<>));
-        
         return collection;
     }
     

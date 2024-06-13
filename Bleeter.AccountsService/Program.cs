@@ -1,7 +1,10 @@
+using System.Reflection;
 using Bleeter.AccountService.Data;
 using Bleeter.AccountService.Services;
 using Bleeter.AccountService.Utils;
 using Bleeter.Shared.Extensions;
+using Bleeter.Shared.Middlewares;
+using FluentValidation;
 using MassTransit;
 using Microsoft.AspNetCore.Identity;
 
@@ -14,9 +17,12 @@ builder.Services.AddPersistence<AccountContext>(builder.Configuration.GetConnect
     "Bleeter.AccountsService");
 
 builder.Services.Configure<JwtSecurityTokenSettings>(builder.Configuration.GetSection("JwtSecurityTokenOptions") ?? throw new ArgumentNullException());
-builder.Services.AddMediator<Program>();
+
+builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 builder.Services.AddMiddlewares();
+builder.Services.AddMediator<Program>();
 builder.Services.AddControllers();
+builder.Services.AddSharedServices();
 
 builder.Services.AddMassTransit(opt =>
 {
@@ -62,6 +68,8 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseMiddleware<ExceptionMiddleware>();
 
 app.MapControllers();
 app.MapIdentityApi<IdentityUser<Guid>>();
