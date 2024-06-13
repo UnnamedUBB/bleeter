@@ -1,49 +1,29 @@
 using Bleeter.Notification;
+using Bleeter.Notification.Consumers;
+using MassTransit;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddMassTransit(opt =>
+{
+    opt.AddConsumers(typeof(NotificationConsumer).Assembly);
+    opt.SetKebabCaseEndpointNameFormatter();
+    opt.UsingRabbitMq((ctx, mq) =>
+    {
+        var hostname = builder.Configuration.GetValue<string>("RabbitMq:HostName");
+        var virtualHost = builder.Configuration.GetValue<string>("RabbitMq:VirtualHost");
+        var username = builder.Configuration.GetValue<string>("RabbitMq:UserName");
+        var password = builder.Configuration.GetValue<string>("RabbitMq:Password");
+        
+        mq.Host(hostname, virtualHost, (hostBuilder) =>
+        {
+            hostBuilder.Username(username!);
+            hostBuilder.Password(password!);
+        });
+        mq.ConfigureEndpoints(ctx);
+    });
+});
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
-app.UseHttpsRedirection();
-
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
-    {
-        var forecast = Enumerable.Range(1, 5).Select(index =>
-                new WeatherForecast
-                (
-                    DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                    Random.Shared.Next(-20, 55),
-                    summaries[Random.Shared.Next(summaries.Length)]
-                ))
-            .ToArray();
-        return forecast;
-    })
-    .WithName("GetWeatherForecast")
-    .WithOpenApi();
-
 app.Run();
-
-namespace Bleeter.Notification
-{
-    record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-    {
-        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-    }
-}

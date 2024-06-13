@@ -9,7 +9,7 @@ namespace Bleeter.AccountService.Controllers;
 [ApiController]
 [Route("[controller]")]
 [AllowAnonymous]
-public class AuthController : BaseController
+public class AccountController : BaseController
 {
     [HttpPost]
     [AllowAnonymous]
@@ -17,8 +17,16 @@ public class AuthController : BaseController
     {
         return Ok(await Mediator.Send(command));
     }
+    
+    [HttpPost("create")]
+    [AllowAnonymous]
+    public async Task<IActionResult> Register([FromBody] RegisterCommand command)
+    {
+        await Mediator.Send(command);
+        return Ok();
+    }
 
-    public AuthController(IMediator mediator) : base(mediator)
+    public AccountController(IMediator mediator) : base(mediator)
     {
     }
 }

@@ -1,13 +1,28 @@
 using Bleeter.AccountService.Data.Models;
+using Bleeter.Shared.Messages;
+using MassTransit;
 using Microsoft.AspNetCore.Identity;
 
 namespace Bleeter.AccountService.Services;
 
 public class RabbitMqMessageSender : IEmailSender<IdentityUser<Guid>>
 {
+    private readonly IPublishEndpoint _publishEndpoint;
+
+    public RabbitMqMessageSender(IPublishEndpoint publishEndpoint)
+    {
+        _publishEndpoint = publishEndpoint;
+    }
+
     public Task SendConfirmationLinkAsync(IdentityUser<Guid> user, string email, string confirmationLink)
     {
-        throw new NotImplementedException();
+        _publishEndpoint.Publish(new EmailConfirmationMessage()
+        {
+            Email = email,
+            ConfirmationLink = confirmationLink,
+        });
+        
+        return Task.CompletedTask;
     }
 
     public Task SendPasswordResetLinkAsync(IdentityUser<Guid> user, string email, string resetLink)

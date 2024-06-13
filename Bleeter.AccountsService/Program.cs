@@ -2,6 +2,7 @@ using Bleeter.AccountService.Data;
 using Bleeter.AccountService.Services;
 using Bleeter.AccountService.Utils;
 using Bleeter.Shared.Extensions;
+using MassTransit;
 using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,7 +18,25 @@ builder.Services.AddMediator<Program>();
 builder.Services.AddMiddlewares();
 builder.Services.AddControllers();
 
-builder.Services.AddMessageBroker(builder.Configuration.GetSection("RabbitMq"));
+builder.Services.AddMassTransit(opt =>
+{
+    opt.SetKebabCaseEndpointNameFormatter();
+    opt.UsingRabbitMq((ctx, mq) =>
+    {
+        var hostname = builder.Configuration.GetValue<string>("RabbitMq:HostName");
+        var virtualHost = builder.Configuration.GetValue<string>("RabbitMq:VirtualHost");
+        var username = builder.Configuration.GetValue<string>("RabbitMq:UserName");
+        var password = builder.Configuration.GetValue<string>("RabbitMq:Password");
+        
+        mq.Host(hostname, virtualHost, (hostBuilder) =>
+        {
+            hostBuilder.Username(username!);
+            hostBuilder.Password(password!);
+        });
+        mq.ConfigureEndpoints(ctx);
+    });
+});
+builder.Services.AddSingleton<IPublishEndpoint>(provider => provider.GetRequiredService<IBusControl>());
 builder.Services.AddTransient<IEmailSender<IdentityUser<Guid>>, RabbitMqMessageSender>();
 
 builder.Services.AddJwtAuth();
