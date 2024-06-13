@@ -22,16 +22,18 @@ builder.Services.AddScoped<ICommentRepository, CommentRepository>();
 builder.Services.AddScoped<ILikeRepository, LikeRepository>();
 
 builder.Services.AddAuthentication("Bearer")
-    .AddJwtBearer("Bearer", x =>
+    .AddIdentityServerAuthentication("Bearer", x =>
     {
         x.Authority = builder.Configuration.GetValue<string>("IdentityServerHostName");
-        x.TokenValidationParameters = new TokenValidationParameters()
-        {
-            ValidateAudience = false,
-            ValidateIssuer = false,
-            ValidIssuer = "https://localhost:7087",
-        };
+        x.ApiName = "secretApi";
+        x.RequireHttpsMetadata = false;
     });
+    // .AddJwtBearer("Bearer", x =>
+    // {
+    //     x.Authority = builder.Configuration.GetValue<string>("IdentityServerHostName");
+    //     x.Audience = "secretApi";
+    //     x.RequireHttpsMetadata = false;
+    // });
 
 builder.Services.AddAuthorization();
 
@@ -51,5 +53,12 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseCors(x =>
+{
+    x.AllowAnyHeader();
+    x.AllowAnyMethod();
+    x.AllowAnyOrigin();
+});
 
 app.Run();

@@ -49,4 +49,11 @@ app.MapControllers();
 app.MapIdentityApi<AccountModel>();
 app.UseIdentityServer();
 
+app.UseCors(x =>
+{
+    x.AllowAnyHeader();
+    x.AllowAnyMethod();
+    x.AllowAnyOrigin();
+});
+
 app.Run();

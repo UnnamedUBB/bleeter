@@ -24,7 +24,7 @@ services:
       account-service-db:
         condition: service_started
     ports:
-      - 80:80
+      - 5001:5001
         
   account-service-db:
     image: mariadb
@@ -44,7 +44,7 @@ services:
       bleets-service-db:
         condition: service_started
     ports:
-      - 81:81
+      - 5002:5002
       
   bleets-service-db:
     image: mariadb
@@ -64,7 +64,7 @@ services:
       private-messages-service-db:
         condition: service_started
     ports:
-      - 82:82
+      - 5003:5003
   
   private-messages-service-db:
     image: mariadb
@@ -84,7 +84,7 @@ services:
       notifications-service-db:
         condition: service_started
     ports:
-      - 83:83
+      - 5004:5004
   
   notifications-service-db:
     image: mariadb
