@@ -69,7 +69,7 @@ public class SignInCommandHandler : IRequestHandler<SignInCommand, string>
                 new Claim(JwtRegisteredClaimNames.Aud, "https://localhost:5002"),
                 new Claim(JwtRegisteredClaimNames.Aud, "https://localhost:5003"),
             }),
-            Expires = DateTime.Now.AddMinutes(5),
+            Expires = DateTime.Now.AddMinutes(30),
             SigningCredentials = new SigningCredentials(signInKey, SecurityAlgorithms.HmacSha256),
             Issuer = "https://localhost:5001",
         };

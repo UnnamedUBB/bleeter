@@ -30,6 +30,11 @@ public class BleetController : BaseController
         await Mediator.Send(command);
         return Ok();
     }
+    [HttpGet("/user")]
+    public async Task<IActionResult> GetBleetsByUserId([FromQuery] GetBleetsByUserIdQuery query)
+    {
+        return Ok(await Mediator.Send(query));
+    }
 
     public BleetController(IMediator mediator) : base(mediator)
     {
