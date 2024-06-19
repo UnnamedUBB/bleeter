@@ -14,6 +14,8 @@ services:
     ports:
       - 5672:5672
       - 15672:15672
+    networks:
+      - rabbit
     volumes:
       - /var/bleeter/rabbit
         
@@ -21,9 +23,10 @@ services:
     image: accounts-service:latest
     container_name: accounts-service
     depends_on:
-      account-service-db:
-        condition: service_started
-      
+      - account-service-db
+      - rabbitmq
+    networks:
+      - rabbit
     ports:
       - 5001:5001
         
@@ -42,8 +45,10 @@ services:
     image: bleets-service:latest
     container_name: bleets-service
     depends_on:
-      bleets-service-db:
-        condition: service_started
+      - bleets-service-db
+      - rabbitmq
+    networks:
+      - rabbit
     ports:
       - 5002:5002
       
@@ -62,10 +67,9 @@ services:
 
   private-messages-service:
     image: private-messages-service:latest
-    container_name: private-messages
+    container_name: private-messages-serivce
     depends_on:
-      private-messages-service-db:
-        condition: service_started
+      - private-messages-service-db
     ports:
       - 5003:5003
   
@@ -84,8 +88,10 @@ services:
     image: notifications-service:latest
     container_name: notifications-service
     depends_on:
-      notifications-service-db:
-        condition: service_started
+      - notifications-service-db
+      - rabbitmq
+    networks:
+        - rabbit
     ports:
       - 5004:5004
   
@@ -104,5 +110,10 @@ volumes:
   db:
     name: "bleeter"
     driver: local
+    
+networks:
+  rabbit:
+    name: "rabbit"
+    driver: bridge
     
     
