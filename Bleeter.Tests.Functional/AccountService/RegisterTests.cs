@@ -28,7 +28,7 @@ public class RegisterTests : BaseFunctionalTest<AccountContext, AccountsService.
         var content = new StringContent(JsonSerializer.Serialize(command), Encoding.UTF8, "application/json");
 
         // Act
-        var response = await HttpClient.PostAsync("/account/create", content);
+        var response = await HttpClient.PostAsync("/Account/create", content);
 
         // Assert
         response.EnsureSuccessStatusCode();
