@@ -2,6 +2,7 @@
 
 public class GetBleetDto
 {
+    public Guid Id { get; set; }
     public string Content { get; set; }
     public DateTime DateCreatedUtc { get; set; }
     public DateTime? DateModifiedUtc { get; set; }
