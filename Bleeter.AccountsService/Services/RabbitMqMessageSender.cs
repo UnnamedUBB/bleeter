@@ -1,9 +1,8 @@
-using Bleeter.AccountService.Data.Models;
 using Bleeter.Shared.Messages;
 using MassTransit;
 using Microsoft.AspNetCore.Identity;
 
-namespace Bleeter.AccountService.Services;
+namespace Bleeter.AccountsService.Services;
 
 public class RabbitMqMessageSender : IEmailSender<IdentityUser<Guid>>
 {

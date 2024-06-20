@@ -79,3 +79,5 @@ app.UseCors(x =>
 });
 
 app.Run();
+
+public partial class Program {}

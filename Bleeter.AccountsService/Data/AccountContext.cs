@@ -1,11 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.Reflection;
-using Bleeter.AccountService.Data.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace Bleeter.AccountService.Data;
+namespace Bleeter.AccountsService.Data;
 
 public class AccountContext : IdentityDbContext<IdentityUser<Guid>, IdentityRole<Guid>, Guid>
 {

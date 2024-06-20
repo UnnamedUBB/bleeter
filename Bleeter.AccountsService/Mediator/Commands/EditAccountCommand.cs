@@ -1,4 +1,3 @@
-using System.Data;
 using System.Net;
 using Bleeter.Shared.Exceptions;
 using Bleeter.Shared.Messages;
@@ -6,10 +5,9 @@ using Bleeter.Shared.Services.Interfaces;
 using FluentValidation;
 using MassTransit;
 using MediatR;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 
-namespace Bleeter.AccountService.Mediator.Commands;
+namespace Bleeter.AccountsService.Mediator.Commands;
 
 public class EditAccountCommand : IRequest
 {

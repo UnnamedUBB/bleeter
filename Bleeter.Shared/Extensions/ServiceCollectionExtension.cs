@@ -8,7 +8,6 @@ using Bleeter.Shared.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 
@@ -35,12 +34,12 @@ public static class ServiceCollectionExtension
             {
                 opt.TokenValidationParameters = new TokenValidationParameters()
                 {
-                    ValidIssuer = "https://localhost:5001",
+                    ValidIssuer = "http://localhost:5401",
                     ValidateIssuer = true,
                     ValidateIssuerSigningKey = true,
                     ValidateAudience = true,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("ktowcuroicmpyseqskuitzgyvgwmvxkx")),
-                    ValidAudiences = new []{"https://localhost:5001", "https://localhost:5002"}
+                    ValidAudiences = new []{"http://localhost:5401", "http://localhost:5402"}
                 };
             });
 

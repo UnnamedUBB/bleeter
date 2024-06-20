@@ -1,7 +1,6 @@
-using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity;
 
-namespace Bleeter.AccountService.Data.Models;
+namespace Bleeter.AccountsService.Data.Models;
 
 public class AccountModel : IdentityUser<Guid>
 {

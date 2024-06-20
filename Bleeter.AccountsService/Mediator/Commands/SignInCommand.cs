@@ -2,15 +2,13 @@
 using System.Net;
 using System.Security.Claims;
 using System.Text;
-using Bleeter.AccountService.Utils;
 using Bleeter.Shared.Exceptions;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Bleeter.AccountService.Mediator.Commands;
+namespace Bleeter.AccountsService.Mediator.Commands;
 
 public class SignInCommand : IRequest<string>
 {
@@ -65,13 +63,12 @@ public class SignInCommandHandler : IRequestHandler<SignInCommand, string>
                 new Claim(JwtRegisteredClaimNames.Sid, user.Id.ToString()),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(JwtRegisteredClaimNames.Name, (user.UserName ?? user.Email) ?? string.Empty),
-                new Claim(JwtRegisteredClaimNames.Aud, "https://localhost:5001"),
-                new Claim(JwtRegisteredClaimNames.Aud, "https://localhost:5002"),
-                new Claim(JwtRegisteredClaimNames.Aud, "https://localhost:5003"),
+                new Claim(JwtRegisteredClaimNames.Aud, "http://localhost:5401"),
+                new Claim(JwtRegisteredClaimNames.Aud, "http://localhost:5402"),
             }),
             Expires = DateTime.Now.AddMinutes(5),
             SigningCredentials = new SigningCredentials(signInKey, SecurityAlgorithms.HmacSha256),
-            Issuer = "https://localhost:5001",
+            Issuer = "http://localhost:5401",
         };
         
         var tokenHandler = new JwtSecurityTokenHandler();

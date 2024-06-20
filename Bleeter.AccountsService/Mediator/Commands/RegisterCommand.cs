@@ -1,11 +1,9 @@
-﻿using System.Text;
-using System.Text.Encodings.Web;
+﻿using System.Text.Encodings.Web;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.WebUtilities;
 
-namespace Bleeter.AccountService.Mediator.Commands;
+namespace Bleeter.AccountsService.Mediator.Commands;
 
 public class RegisterCommand : IRequest
 {

@@ -1,4 +1,4 @@
-﻿namespace Bleeter.AccountService.Utils;
+﻿namespace Bleeter.AccountsService.Utils;
 
 public class JwtSecurityTokenSettings
 {

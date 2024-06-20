@@ -18,15 +18,6 @@ if %errorlevel% neq 0 (
     exit /b %errorlevel%
 )
 
-:: Budowanie obrazu private-messages-service
-echo Budowanie obrazu private-messages-service...
-docker build -t private-messages-service  . -f ./Bleeter.PrivateMessagesService/Dockerfile
-
-if %errorlevel% neq 0 (
-    echo Budowanie obrazu private-messages-service nie powiodło się!
-    exit /b %errorlevel%
-)
-
 :: Budowanie obrazu notifications-service
 echo Budowanie obrazu notifications-service...
 docker build -t notifications-service . -f ./Bleeter.NotificationsService/Dockerfile

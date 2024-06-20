@@ -25,10 +25,14 @@ services:
     depends_on:
       - account-service-db
       - rabbitmq
+    environment:
+      ASPNETCORE_URLS: http://0.0.0.0:5401
     networks:
       - rabbit
+      - accounts-db
     ports:
       - 5001:5001
+      - 5401:5401
         
   account-service-db:
     image: mariadb
@@ -38,6 +42,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root
       MARIADB_DATABASE: accounts
+    networks:
+      - accounts-db
     volumes:
       - db:/var/bleeter/data/accounts
   
@@ -47,10 +53,14 @@ services:
     depends_on:
       - bleets-service-db
       - rabbitmq
+    environment:
+      ASPNETCORE_URLS: http://0.0.0.0:5402
     networks:
       - rabbit
+      - bleets-db
     ports:
       - 5002:5002
+      - 5402:5402
       
   bleets-service-db:
     image: mariadb
@@ -62,49 +72,31 @@ services:
       MARIADB_DATABASE: bleets
       MYSQL_TCP_PORT: 3307
       MYSQL_UNIX_PORT: 3307
+    networks:
+      - bleets-db
     volumes:
       - db:/var/bleeter/data/bleets
-
-  private-messages-service:
-    image: private-messages-service:latest
-    container_name: private-messages-serivce
-    depends_on:
-      - private-messages-service-db
-    ports:
-      - 5003:5003
-  
-  private-messages-service-db:
-    image: mariadb
-    container_name: private-messages-db
-    ports:
-      - 3308:3308
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MARIADB_DATABASE: pms
-    volumes:
-      - db:/var/bleeter/data/pms
         
   notifications-service:
     image: notifications-service:latest
     container_name: notifications-service
     depends_on:
-      - notifications-service-db
       - rabbitmq
+    environment:
+      ASPNETCORE_URLS: http://0.0.0.0:5404
     networks:
         - rabbit
     ports:
       - 5004:5004
-  
-  notifications-service-db:
-    image: mariadb
-    container_name: notifications-service-db
+      - 5404:5404
+        
+  bleeter-react:
+    image: bleeter-react
+    container_name: bleeter-react
     ports:
-      - 3309:3309
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MARIADB_DATABASE: notifications
-    volumes:
-      - db:/var/bleeter/data/notifications-service
+      - 80:80
+      - 8080:8080
+      - 443:443
   
 volumes:
   db:
@@ -114,6 +106,12 @@ volumes:
 networks:
   rabbit:
     name: "rabbit"
+    driver: bridge
+  accounts-db:
+    name: "accounts-db"
+    driver: bridge
+  bleets-db:
+    name: "bleets-db"
     driver: bridge
     
     

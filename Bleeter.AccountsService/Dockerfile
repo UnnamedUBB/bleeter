@@ -19,4 +19,6 @@ RUN dotnet publish "Bleeter.AccountsService.csproj" -c $BUILD_CONFIGURATION -o /
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+EXPOSE 5001
+EXPOSE 5401
 ENTRYPOINT ["dotnet", "Bleeter.AccountsService.dll"]

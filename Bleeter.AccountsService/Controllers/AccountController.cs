@@ -1,10 +1,10 @@
-﻿using Bleeter.AccountService.Mediator.Commands;
+﻿using Bleeter.AccountsService.Mediator.Commands;
 using Bleeter.Shared.Utils;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Bleeter.AccountService.Controllers;
+namespace Bleeter.AccountsService.Controllers;
 
 [ApiController]
 [Route("[controller]")]

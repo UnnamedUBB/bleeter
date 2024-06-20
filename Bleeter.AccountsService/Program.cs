@@ -1,7 +1,7 @@
 using System.Reflection;
-using Bleeter.AccountService.Data;
-using Bleeter.AccountService.Services;
-using Bleeter.AccountService.Utils;
+using Bleeter.AccountsService.Data;
+using Bleeter.AccountsService.Services;
+using Bleeter.AccountsService.Utils;
 using Bleeter.Shared.Extensions;
 using Bleeter.Shared.Middlewares;
 using FluentValidation;
@@ -20,7 +20,7 @@ builder.Services.Configure<JwtSecurityTokenSettings>(builder.Configuration.GetSe
 
 builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 builder.Services.AddMiddlewares();
-builder.Services.AddMediator<Program>();
+builder.Services.AddMediator<Bleeter.AccountsService.Program>();
 builder.Services.AddControllers();
 builder.Services.AddSharedServices();
 
@@ -81,3 +81,8 @@ app.UseCors(x =>
 });
 
 app.Run();
+
+namespace Bleeter.AccountsService
+{
+    public partial class Program;
+}
