@@ -1,5 +1,6 @@
 using System.Linq.Expressions;
 using Bleeter.Shared.Data.Repositories.Interfaces;
+using Mapster;
 using Microsoft.EntityFrameworkCore;
 
 namespace Bleeter.Shared.Data.Repositories;
@@ -35,20 +36,27 @@ public abstract class BaseRepository<TContext, TModel> : IBaseRepository<TContex
         int? pageSize = null,
         params Expression<Func<TModel, object>>[] includes)
     {
-        var query = PrepareQueryable(expression, orderBy, includes);
-
-        var total = await query.CountAsync();
-
-        if (page is not null && pageSize is not null)
-        {
-            var preparedPage = page.Value - 1 < 0 ? 0 : page.Value - 1;
-            query = query.Skip(preparedPage * pageSize.Value).Take(pageSize.Value);
-        }
+        var (total, query) = await PreparePageableQueryableAsync(expression, orderBy, page, pageSize, includes);
 
         return new PageableList<TModel>
         {
             TotalCount = total,
             Data = await query.ToListAsync()
+        };
+    }
+    
+    public async Task<PageableList<T>> GetAllWithPaginationAsync<T>(Expression<Func<TModel, bool>> expression = null,
+        Func<IQueryable<TModel>, IOrderedQueryable<TModel>>? orderBy = null,
+        int? page = null,
+        int? pageSize = null,
+        params Expression<Func<TModel, object>>[] includes)
+    {
+        var (total, query) = await PreparePageableQueryableAsync(expression, orderBy, page, pageSize, includes);
+
+        return new PageableList<T>
+        {
+            TotalCount = total,
+            Data = await query.ProjectToType<T>().ToListAsync()
         };
     }
 
@@ -103,5 +111,24 @@ public abstract class BaseRepository<TContext, TModel> : IBaseRepository<TContex
         baseQuery = includes.Aggregate(baseQuery, (curr, acc) => curr.Include(acc));
 
         return baseQuery;
+    }
+    
+    protected virtual async Task<(int, IQueryable<TModel>)> PreparePageableQueryableAsync(Expression<Func<TModel, bool>> expression = null,
+        Func<IQueryable<TModel>, IOrderedQueryable<TModel>>? orderBy = null,
+        int? page = null,
+        int? pageSize = null,
+        params Expression<Func<TModel, object>>[] includes)
+    {
+        var query = PrepareQueryable(expression, orderBy, includes);
+
+        var total = await query.CountAsync();
+
+        if (page is not null && pageSize is not null)
+        {
+            var preparedPage = page.Value - 1 < 0 ? 0 : page.Value - 1;
+            query = query.Skip(preparedPage * pageSize.Value).Take(pageSize.Value);
+        }
+
+        return (total, query);
     }
 }

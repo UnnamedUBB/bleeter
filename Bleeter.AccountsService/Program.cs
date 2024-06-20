@@ -72,7 +72,6 @@ app.UseAuthorization();
 app.UseMiddleware<ExceptionMiddleware>();
 
 app.MapControllers();
-app.MapIdentityApi<IdentityUser<Guid>>();
 
 app.UseCors(x =>
 {

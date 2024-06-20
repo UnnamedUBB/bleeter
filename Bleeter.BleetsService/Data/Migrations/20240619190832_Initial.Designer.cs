@@ -4,16 +4,19 @@ using Bleeter.BleetsService.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Bleeter.BleetsService.Migrations
+namespace Bleeter.BleetsService.Data.Migrations
 {
     [DbContext(typeof(BleetsContext))]
-    partial class BleetsContextModelSnapshot : ModelSnapshot
+    [Migration("20240619190832_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

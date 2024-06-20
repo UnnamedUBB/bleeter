@@ -17,6 +17,12 @@ public class BleetController : BaseController
         return Ok(await Mediator.Send(query));
     }
     
+    [HttpGet("user")]
+    public async Task<IActionResult> GetBleets([FromQuery] GetBleetsByAuthorIdQuery query)
+    {
+        return Ok(await Mediator.Send(query));
+    }
+    
     [HttpPost]
     public async Task<IActionResult> AddBleet([FromBody] AddBleetCommand command)
     {

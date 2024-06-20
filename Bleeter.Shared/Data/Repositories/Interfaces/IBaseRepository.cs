@@ -20,6 +20,12 @@ public interface IBaseRepository<TContext, TModel>
         int? page = null,
         int? pageSize = null,
         params Expression<Func<TModel, object>>[] includes);
+    
+    public Task<PageableList<T>> GetAllWithPaginationAsync<T>(Expression<Func<TModel, bool>> expression = null,
+        Func<IQueryable<TModel>, IOrderedQueryable<TModel>>? orderBy = null,
+        int? page = null,
+        int? pageSize = null,
+        params Expression<Func<TModel, object>>[] includes);
 
     public Task<bool> ExistsAsync(Expression<Func<TModel, bool>> expression);
 

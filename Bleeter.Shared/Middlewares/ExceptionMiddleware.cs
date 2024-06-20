@@ -9,7 +9,6 @@ public sealed class ExceptionMiddleware : IMiddleware
     {
         try
         {
-            Console.WriteLine("work");
             await next(context);
         }
         catch (ValidatorException e)

@@ -9,9 +9,9 @@ public class AuthorModel : BaseModel, IAuditable
 {
     public string UserName { get; set; }
 
-    public ICollection<BleetModel> Bleets { get; set; }
-    public ICollection<CommentModel> Comments { get; set; }
-    public ICollection<LikeModel> Likes { get; set; }
+    public virtual ICollection<BleetModel> Bleets { get; set; }
+    public virtual ICollection<CommentModel> Comments { get; set; }
+    public virtual ICollection<LikeModel> Likes { get; set; }
     
     public DateTime DateCreatedUtc { get; set; }
     public Guid? CreatedBy { get; set; }

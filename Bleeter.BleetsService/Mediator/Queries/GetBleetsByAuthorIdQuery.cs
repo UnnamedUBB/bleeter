@@ -8,15 +8,15 @@ using MediatR;
 
 namespace Bleeter.BleetsService.Mediator.Queries;
 
-public class GetBleetsQuery : IRequest<PageableList<GetBleetDto>>
+public class GetBleetsByAuthorIdQuery : IRequest<PageableList<GetBleetDto>>
 {
     public int PageSize { get; set; } = 20;
     public int Page { get; set; } = 1;
 }
 
-public class GetBleetsQueryValidator : AbstractValidator<GetBleetsQuery>
+public class GetBleetsByAuthorIdQueryValidator : AbstractValidator<GetBleetsByAuthorIdQuery>
 {
-    public GetBleetsQueryValidator()
+    public GetBleetsByAuthorIdQueryValidator()
     {
         RuleFor(x => x.PageSize)
             .GreaterThan(0).WithMessage("PageSize musi być większe niż 0")
@@ -27,21 +27,21 @@ public class GetBleetsQueryValidator : AbstractValidator<GetBleetsQuery>
     }
 }
 
-public class GetBleetsQueryHandler : IRequestHandler<GetBleetsQuery, PageableList<GetBleetDto>>
+public class GetBleetsByAuthorIdQueryHandler : IRequestHandler<GetBleetsByAuthorIdQuery, PageableList<GetBleetDto>>
 {
     private readonly IBleetRepository _bleetRepository;
     private readonly IUserClaimService _userClaimService;
 
-    public GetBleetsQueryHandler(IBleetRepository bleetRepository, IUserClaimService userClaimService)
+    public GetBleetsByAuthorIdQueryHandler(IBleetRepository bleetRepository, IUserClaimService userClaimService)
     {
         _bleetRepository = bleetRepository;
         _userClaimService = userClaimService;
     }
 
-    public Task<PageableList<GetBleetDto>> Handle(GetBleetsQuery request, CancellationToken cancellationToken)
+    public Task<PageableList<GetBleetDto>> Handle(GetBleetsByAuthorIdQuery request, CancellationToken cancellationToken)
     {
         return _bleetRepository.GetAllWithPaginationAsync<GetBleetDto>(
-            x => x.AuthorId != _userClaimService.GetUserId(),
+            x => x.AuthorId == _userClaimService.GetUserId(),
             null,
             request.Page,
             request.PageSize

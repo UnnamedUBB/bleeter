@@ -17,5 +17,10 @@ public class BleetConfiguration : IEntityTypeConfiguration<BleetModel>
             .HasMany(x => x.Comments)
             .WithOne(x => x.Bleet)
             .HasForeignKey(x => x.BleetId);
+
+        builder
+            .HasOne(x => x.Author)
+            .WithMany(x => x.Bleets)
+            .HasForeignKey(x => x.AuthorId);
     }
 }

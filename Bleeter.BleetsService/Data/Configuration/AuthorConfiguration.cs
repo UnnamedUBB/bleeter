@@ -9,11 +9,6 @@ public class AuthorConfiguration : IEntityTypeConfiguration<AuthorModel>
     public void Configure(EntityTypeBuilder<AuthorModel> builder)
     {
         builder
-            .HasMany(x => x.Bleets)
-            .WithOne(x => x.Author)
-            .HasForeignKey(x => x.AuthorId);
-
-        builder
             .HasMany(x => x.Comments)
             .WithOne(x => x.Author)
             .HasForeignKey(x => x.AuthorId);

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Bleeter.BleetsService.Migrations
+namespace Bleeter.BleetsService.Data.Migrations
 {
     /// <inheritdoc />
     public partial class Initial : Migration

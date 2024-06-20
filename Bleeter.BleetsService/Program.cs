@@ -2,6 +2,7 @@ using System.Reflection;
 using Bleeter.BleetsService.Data;
 using Bleeter.BleetsService.Data.Repositories;
 using Bleeter.BleetsService.Data.Repositories.Interfaces;
+using Bleeter.BleetsService.Extensions;
 using Bleeter.BleetsService.Services;
 using Bleeter.BleetsService.Services.Interfaces;
 using Bleeter.Shared.Extensions;
@@ -20,6 +21,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddMediator<Program>();
 builder.Services.AddMiddlewares();
 builder.Services.AddSharedServices();
+builder.Services.RegisterMapsterConfiguration();
 
 builder.Services.AddScoped<IAuthorRepository, AuthorRepository>();
 builder.Services.AddScoped<IBleetRepository, BleetRepository>();
